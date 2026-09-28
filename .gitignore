@@ -1,3 +1,10 @@
 /node_modules
 /dist
 /.angular
+/backend/target/
+.env
+.env.*
+!.env.example
+*.log
+/backend/.idea/
+/backend/*.iml

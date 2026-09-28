@@ -1,18 +1,29 @@
 <main>
-  <form class="login" (ngSubmit)="onEntrar()">
+  <form class="login" #form="ngForm" (ngSubmit)="onEntrar(form)" [attr.aria-busy]="isLoading()">
     <h1>Login</h1>
 
     <label for="email">E-mail</label>
-    <input id="email" name="email" type="email" autocomplete="username" [(ngModel)]="email">
+    <input id="email" name="email" type="email" autocomplete="username" [(ngModel)]="email"
+      required email maxlength="254" [disabled]="isLoading()">
 
     <label for="senha">Senha</label>
-    <input id="senha" name="senha" type="password" autocomplete="current-password" [(ngModel)]="senha">
+    <input id="senha" name="senha" type="password" autocomplete="current-password" [(ngModel)]="senha"
+      required maxlength="72" [disabled]="isLoading()">
 
     <div class="opcoes">
-      <button type="button" class="opcao">Esqueci a senha</button>
-      <button type="button" class="opcao">Criar conta</button>
+      <button type="button" class="opcao" disabled title="Fora do escopo desta atividade">Esqueci a senha</button>
+      <button type="button" class="opcao" disabled title="Fora do escopo desta atividade">Criar conta</button>
     </div>
 
-    <button type="submit" class="entrar">ENTRAR</button>
+    @if (sessionExpired) {
+      <p role="status">Sua sessão expirou. Entre novamente.</p>
+    }
+    @if (error()) {
+      <p class="erro" role="alert">{{ error() }}</p>
+    }
+
+    <button type="submit" class="entrar" [disabled]="isLoading()">
+      {{ isLoading() ? 'ENTRANDO...' : 'ENTRAR' }}
+    </button>
   </form>
 </main>

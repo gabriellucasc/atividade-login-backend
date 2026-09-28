@@ -1,0 +1,20 @@
+<main>
+  <section class="login" [attr.aria-busy]="isLoading()">
+    <h1>Área autenticada</h1>
+    @if (isLoading()) {
+      <p role="status">Carregando perfil...</p>
+    }
+    @if (profile(); as user) {
+      <p>Bem-vindo, {{ user.email }}.</p>
+      <p>Permissão: {{ user.role }}</p>
+      <p>Seu acesso foi validado pelo servidor.</p>
+    }
+    @if (error()) {
+      <p class="erro" role="alert">{{ error() }}</p>
+    }
+    <div class="opcoes">
+      <button class="opcao" type="button" (click)="load()" [disabled]="isLoading()">Atualizar perfil</button>
+    </div>
+    <button class="entrar" type="button" (click)="auth.logout()">SAIR</button>
+  </section>
+</main>
